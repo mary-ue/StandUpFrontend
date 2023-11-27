@@ -1,4 +1,5 @@
 .event {
+  padding: 30px;
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -13,10 +14,15 @@
 }
 
 .event__title {
-  margin-bottom: 62px;
+  margin-bottom: 50px;
   font-size: 100px;
   font-weight: 800;
   line-height: 1.2;
+}
+
+.event__info-item {
+  font-size: 30px;
+  line-height: 1.4;
 }
 
 .event__info {
@@ -25,15 +31,8 @@
   gap: 80px;
 }
 
-.event__info-item {
-  display: flex;
-  align-items: end;
-  gap: 8px;
-  font-size: 30px;
-  line-height: 2;
-}
-
 .event__info-number {
+  margin-right: 8px;
   font-size: 80px;
   font-weight: 800;
   line-height: 1.2;
@@ -57,4 +56,29 @@
   align-items: center;
   gap: 8px;
   font-size: 18px;
+}
+
+@media (max-width: 1024px) {
+  .event__title {
+    margin-bottom: 40px;
+    font-size: 70px;
+  }
+
+  .event__info-item {
+    font-size: 24px;
+  }
+  
+  .event__info {
+    margin-bottom: 45px;
+    gap: 50px;
+  }
+
+  .event__info-number {
+    font-size: 50px;
+  }
+
+  .event__button_reserve {
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
 }

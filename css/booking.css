@@ -4,10 +4,12 @@
   display: flex;
   align-items: center;
   color: #1A1A1A;
+  background-color: #EBECF1;
 }
 
 .booking__container {
   max-width: 1440px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 80px;
 }
@@ -16,6 +18,7 @@
   margin-bottom: 50px;
   font-size: 46px;
   font-weight: 800;
+  line-height: 1.2;
 }
 
 .booking__fieldset_user-info {
@@ -38,6 +41,7 @@
   display: block;
   max-width: 380px;
   height: 44px;
+  width: 100%;
 }
 
 .booking__fieldset_comedians {
@@ -71,4 +75,19 @@
   font-size: 18px;
   line-height: 1.4;
   color: #1A1A1A;
+}
+
+@media (max-width: 1024px) {
+  .booking__title {
+    margin-bottom: 40px;
+    font-size: 32px;
+  }
+
+  .booking__fieldset_user-info {
+    margin-bottom: 40px;
+  }
+
+  .booking__fieldset_comedians {
+    margin-bottom: 82px;
+  }
 }
