@@ -87,3 +87,10 @@ fieldset {
   background: #fff;
 }
 
+.ts-wrapper.single .ts-control::after {
+  border-color: #1A1A1A transparent transparent transparent;
+}
+
+.ts-wrapper.single.dropdown-active .ts-control::after {
+  border-color: transparent transparent #1A1A1A transparent;
+}
