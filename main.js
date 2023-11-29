@@ -1,9 +1,13 @@
+import { Notification } from './scripts/notification';
 import './style.css';
 import TomSelect from 'tom-select';
 
 const MAX_COMEDIANS = 6;
 
+export const notification = Notification.getInstance();
+
 const bookingComediansList = document.querySelector('.booking__comedians-list');
+const bookingForm = document.querySelector('.booking__form');
 
 const createComedianBlock = (comedians) => {
   const bookingComedian = document.createElement('li');
@@ -31,10 +35,10 @@ const createComedianBlock = (comedians) => {
   const bookingTomSelectComedian = new TomSelect(bookingSelectComedian, {
     hideSelected: true, // скрывает выбранный селект
     placeholder: 'Выбрать комика',
-    options: comedians.map(item => ({
+    options: comedians.map((item) => ({
       value: item.id,
       text: item.comedian,
-    }))
+    })),
   });
 
   const bookingTomSelectTime = new TomSelect(bookingSelectTime, {
@@ -47,7 +51,7 @@ const createComedianBlock = (comedians) => {
     bookingTomSelectTime.enable();
     bookingTomSelectComedian.blur();
 
-    const { performances } = comedians.find(item => item.id === id);
+    const { performances } = comedians.find((item) => item.id === id);
 
     bookingTomSelectTime.clear();
     bookingTomSelectTime.clearOptions();
@@ -55,7 +59,7 @@ const createComedianBlock = (comedians) => {
       performances.map((item) => ({
         value: item.time,
         text: item.time,
-      })),
+      }))
     );
 
     bookingHall.remove();
@@ -65,8 +69,8 @@ const createComedianBlock = (comedians) => {
     if (!time) return;
 
     const idComedian = bookingTomSelectComedian.getValue();
-    const { performances } = comedians.find(item => item.id === idComedian);
-    const { hall } = performances.find(item => item.time === time);
+    const { performances } = comedians.find((item) => item.id === idComedian);
+    const { hall } = performances.find((item) => item.time === time);
     inputHidden.value = `${idComedian},${time}`;
 
     bookingTomSelectTime.blur();
@@ -94,17 +98,43 @@ const getComedians = async () => {
 };
 
 const init = async () => {
-  const countComedians = document.querySelector('.event__info-item_comedians .event__info-number');
+  const countComedians = document.querySelector(
+    '.event__info-item_comedians .event__info-number'
+  );
 
-  const comedians = (await getComedians());
+  const comedians = await getComedians();
 
   countComedians.textContent = comedians.length;
 
   const comedianBlock = createComedianBlock(comedians);
 
   bookingComediansList.append(comedianBlock);
+
+  bookingForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const data = { booking: [] };
+    const times = new Set();
+
+    new FormData(bookingForm).forEach((value, field) => {
+      if (field === 'booking') {
+        const [comedian, time] = value.split(',');
+
+        if (comedian && time) {
+          data.booking.push({ comedian, time });
+          times.add(time);
+        }
+      } else {
+        data[field] = value;
+      }
+
+      if (times.size !== data.booking.length) {
+        notification.show(
+          'Нельзя быть в одно время на двух выступлениях',
+          false
+        );
+      }
+    });
+  });
 };
 
 init();
-
-
