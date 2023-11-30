@@ -12,6 +12,7 @@
   background-color: rgba(39, 21, 179, 0.275);
   opacity: 0;
   transform: translateX(100%);
+  pointer-events: none;
 }
 
 .notification_show {

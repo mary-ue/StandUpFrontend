@@ -1,6 +1,8 @@
 import { Notification } from './scripts/notification';
 import './style.css';
 import TomSelect from 'tom-select';
+import Inputmask from 'inputmask';
+import JustValidate from 'just-validate';
 
 const MAX_COMEDIANS = 6;
 
@@ -109,6 +111,60 @@ const init = async () => {
   const comedianBlock = createComedianBlock(comedians);
 
   bookingComediansList.append(comedianBlock);
+
+  const validate = new JustValidate(bookingForm, {
+    errorFieldCssClass: 'booking__input_invalid ',
+    successFieldCssClass: 'booking__input_valid',
+  });
+
+  const bookingInputFullname = document.querySelector('.booking__input_fullname');
+  const bookingInputPhone = document.querySelector('.booking__input_phone');
+  const bookingInputTicket = document.querySelector('.booking__input_ticket');
+
+  const phoneMask = new Inputmask('+7(999)-999-99-99');
+  phoneMask.mask(bookingInputPhone);
+  const ticketMask = new Inputmask('99-99-99-99');
+  ticketMask.mask(bookingInputTicket);
+
+  validate
+    .addField(bookingInputFullname, [{
+      rule: 'required',
+      errorMessage: 'Заполните имя',
+    }])
+    .addField(bookingInputPhone, [{
+      rule: 'required',
+      errorMessage: 'Заполните телефон',
+    }, {
+      validator() {
+        const phone = bookingInputTicket.inputmask.unmaskedvalue();
+        return phone.length === 10 && !!Number(phone);
+      },
+      errorMessage: 'Некорректный телефон',
+    }])
+    .addField(bookingInputTicket, [{
+      rule: 'required',
+      errorMessage: 'Введите номер билета',
+    }, {
+      validator() {
+        const ticket = bookingInputTicket.inputmask.unmaskedvalue();
+        return ticket.length === 8 && !!Number(ticket);
+      },
+      errorMessage: 'Неверный номер билета',
+    }]).onFail((fields) => {
+      let errorMessage = '';
+      for (const key in fields) {
+        if (!Object.hasOwnProperty.call(fields, key)) {
+          continue;
+        }
+
+        const element = fields[key];
+        if (!element.isValid) {
+          errorMessage += `${element.errorMessage}, `;
+        }
+      }
+
+      notification.show(errorMessage.slice(0, -2), false);
+    });
 
   bookingForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
