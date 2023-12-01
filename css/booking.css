@@ -6,6 +6,17 @@
   align-items: center;
   color: #1A1A1A;
   background-color: #EBECF1;
+  transition: opacity 0.5s, visibility 0.5s;
+  opacity: 1;
+  visibility: visible;
+}
+
+.booking__hidden {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  width: 100%;
 }
 
 .booking__container {

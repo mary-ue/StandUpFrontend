@@ -33,12 +33,17 @@
 @media (max-width: 1200px) {
   .notification {
     font-size: 24px;
-  }
+  } 
 }
 
 @media (max-width: 680px) {
   .notification {
     padding: 12px 24px;
     font-size: 18px;
+  }
+
+  .notification_success {
+    padding-right: 56px;
+    background: #00992B url('../img/check.svg') right 24px center / 24px no-repeat;
   }
 }
