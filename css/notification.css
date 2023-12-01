@@ -4,6 +4,7 @@
   right: 50px;
   bottom: 50px;
   z-index: 1000;
+  max-width: calc(100vw - 100px);
   color: #fff;
   font-size: 30px;
   font-weight: 800;
@@ -27,4 +28,17 @@
 
 .notification_error {
   background-color: #900;
+}
+
+@media (max-width: 1200px) {
+  .notification {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 680px) {
+  .notification {
+    padding: 12px 24px;
+    font-size: 18px;
+  }
 }
