@@ -3,8 +3,15 @@ import { getComedians } from './scripts/api.js';
 import { initForm } from './scripts/form.js';
 import { createComedianBlock } from './scripts/comedians.js';
 import { initChangeSection } from './scripts/changeSection.js';
+import { initQrPage } from './scripts/qrPage.js';
 
 const init = async () => {
+
+  if (window.location.pathname.endsWith('qr.html')) {
+    initQrPage();
+    return;
+  }
+
   const bookingComediansList = document.querySelector(
     '.booking__comedians-list'
   );

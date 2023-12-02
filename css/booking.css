@@ -132,6 +132,29 @@
   background: url('../img/gg_qr.svg') right/24px no-repeat;
 }
 
+.booking__client-info {
+  margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.booking__client-item {
+  margin: 0;
+}
+
+.booking__title-qr {
+  margin-bottom: 20px;
+  grid-column: 1 / -1;
+  font-size: 34px;
+}
+
+.booking__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
 @media (max-width: 1024px) {
   .booking__container {
     padding: 0 60px;

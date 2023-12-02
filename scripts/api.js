@@ -1,8 +1,26 @@
 import { Notification } from './notification.js';
 
+const API_URL = 'https://successful-grizzly-mangosteen.glitch.me/';
+
 export const getComedians = async () => {
   try {
-    const response = await fetch('http://localhost:8080/comedians');
+    const response = await fetch(`${API_URL}comedians`);
+    if (!response.ok) {
+      throw new Error(`Сервер вернул ошибку: ${response.status}`);
+    }
+    return response.json();
+  } catch (error) {
+    console.error(`Возникла проблема с fetch запросом: ${error.message}`);
+
+    Notification.getInstance().show(
+      'Возникла ошибка сервера, попробуйте позже'
+    );
+  }
+};
+
+export const getClient = async (ticket) => {
+  try {
+    const response = await fetch(`${API_URL}clients/${ticket}`);
     if (!response.ok) {
       throw new Error(`Сервер вернул ошибку: ${response.status}`);
     }
@@ -19,7 +37,7 @@ export const getComedians = async () => {
 export const sendData = async (method, data, id) => {
   try {
     const response = await fetch(
-      `http://localhost:8080/clients${id ? `/${id}` : ''}`,
+      `${API_URL}clients${id ? `/${id}` : ''}`,
       {
         method,
         headers: {
